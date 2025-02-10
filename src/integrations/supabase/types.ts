@@ -288,14 +288,55 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      admin_stats: {
+        Row: {
+          admin_users: number | null
+          average_rating: number | null
+          cancelled_bookings: number | null
+          confirmed_bookings: number | null
+          new_users_last_week: number | null
+          pending_bookings: number | null
+          sold_out_trips: number | null
+          total_bookings: number | null
+          total_passengers: number | null
+          total_revenue: number | null
+          total_reviews: number | null
+          total_trips: number | null
+          total_users: number | null
+          upcoming_trips: number | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
+      get_admin_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total_bookings: number
+          confirmed_bookings: number
+          pending_bookings: number
+          cancelled_bookings: number
+          total_revenue: number
+          total_passengers: number
+          total_users: number
+          admin_users: number
+          new_users_last_week: number
+          total_reviews: number
+          average_rating: number
+          total_trips: number
+          upcoming_trips: number
+          sold_out_trips: number
+        }[]
+      }
       is_admin: {
         Args: {
           user_id: string
         }
         Returns: boolean
+      }
+      refresh_admin_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: undefined
       }
     }
     Enums: {
