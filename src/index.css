@@ -31,12 +31,16 @@
     @apply border-border;
   }
 
+  html {
+    @apply h-full;
+  }
+
   body {
-    @apply bg-background text-foreground antialiased min-h-screen;
+    @apply h-full bg-background text-foreground antialiased;
   }
 
   #root {
-    @apply min-h-screen flex flex-col;
+    @apply h-full;
   }
 }
 

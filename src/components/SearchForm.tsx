@@ -49,7 +49,8 @@ export const SearchForm = () => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="w-full py-8">
+      <div className="container mx-auto px-4">
       <div className="max-w-4xl mx-auto">
         <div className="bg-white/80 backdrop-blur-lg rounded-2xl p-6 shadow-lg">
         <form onSubmit={handleSubmit} className="space-y-6">
@@ -116,14 +117,15 @@ export const SearchForm = () => {
             {isLoading ? "Recherche en cours..." : "Rechercher"}
           </Button>
         </form>
-      </div>
+        </div>
       </div>
       
       {searchResults.length > 0 && (
-        <div className="mt-8">
-          <SearchResults trips={searchResults} />
+        <div className="mt-8 max-w-4xl mx-auto">
+        <SearchResults trips={searchResults} />
         </div>
       )}
+      </div>
     </div>
   );
 };

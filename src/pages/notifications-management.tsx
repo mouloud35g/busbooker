@@ -31,6 +31,7 @@ import {
 import { supabase } from "@/integrations/supabase/client";
 import type { Database } from "@/integrations/supabase/types";
 
+type NotificationType = "booking" | "system" | "update";
 type Notification = Database['public']['Tables']['notifications']['Row'];
 
 const NotificationsManagement = () => {
@@ -39,7 +40,7 @@ const NotificationsManagement = () => {
 	const [formData, setFormData] = useState({
 		title: "",
 		message: "",
-		type: "system" as const,
+		type: "system" as NotificationType,
 		user_id: "",
 	});
 	const { toast } = useToast();
@@ -182,7 +183,7 @@ const NotificationsManagement = () => {
 									<Label htmlFor="type">Type</Label>
 									<Select
 										value={formData.type}
-										onValueChange={(value: "booking" | "system" | "update") =>
+										onValueChange={(value: NotificationType) =>
 											setFormData({ ...formData, type: value })
 										}
 									>

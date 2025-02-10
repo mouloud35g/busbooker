@@ -3,7 +3,7 @@ import { Bus } from "lucide-react";
 
 export const Hero = () => {
   return (
-    <div className="w-full bg-gradient-to-b from-sage-50/50 to-white/50">
+    <div className="relative w-full bg-gradient-to-b from-sage-50/50 to-white/50">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-gradient-to-br from-sage-100/80 to-transparent" />
       </div>

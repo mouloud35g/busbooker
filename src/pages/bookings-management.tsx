@@ -101,13 +101,13 @@ const BookingsManagement = () => {
 	const getStatusBadgeVariant = (status: string) => {
 		switch (status) {
 			case 'confirmed':
-				return 'success';
+				return 'default';
 			case 'pending':
-				return 'warning';
+				return 'secondary';
 			case 'cancelled':
 				return 'destructive';
 			default:
-				return 'secondary';
+				return 'outline';
 		}
 	};
 
