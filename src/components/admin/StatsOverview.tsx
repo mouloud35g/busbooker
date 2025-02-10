@@ -7,8 +7,6 @@ import {
   Users, BusFront, Calendar, CreditCard, Star, 
   CheckCircle2, Clock, XCircle, UserPlus, Package 
 } from "lucide-react";
-import { format } from "date-fns";
-import { fr } from "date-fns/locale";
 
 type AdminStats = {
   total_bookings: number;
@@ -37,7 +35,8 @@ export const StatsOverview = () => {
         toast.error("Erreur lors du chargement des statistiques");
         throw error;
       }
-      return data as AdminStats;
+      // The function returns an array with one object, so we take the first item
+      return (data as AdminStats[])[0];
     },
     refetchInterval: 5 * 60 * 1000, // Refetch every 5 minutes
   });
