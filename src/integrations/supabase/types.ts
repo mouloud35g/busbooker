@@ -60,6 +60,39 @@ export type Database = {
           },
         ]
       }
+      bus_companies: {
+        Row: {
+          contact_email: string
+          contact_phone: string
+          created_at: string
+          description: string
+          id: string
+          logo_url: string | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          contact_email: string
+          contact_phone: string
+          created_at?: string
+          description: string
+          id?: string
+          logo_url?: string | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          contact_email?: string
+          contact_phone?: string
+          created_at?: string
+          description?: string
+          id?: string
+          logo_url?: string | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       bus_trips: {
         Row: {
           arrival_city: string
@@ -96,6 +129,47 @@ export type Database = {
         }
         Relationships: []
       }
+      notifications: {
+        Row: {
+          created_at: string
+          id: string
+          message: string
+          read: boolean | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          message: string
+          read?: boolean | null
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          message?: string
+          read?: boolean | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "notifications_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       passengers: {
         Row: {
           booking_id: string
@@ -131,7 +205,7 @@ export type Database = {
           },
         ]
       }
-        profiles: {
+      profiles: {
         Row: {
           address: string | null
           avatar_url: string | null
@@ -166,126 +240,52 @@ export type Database = {
           username?: string | null
         }
         Relationships: []
-        }
-        bus_companies: {
+      }
+      reviews: {
         Row: {
-          id: string
-          name: string
-          logo_url: string | null
-          description: string
-          contact_email: string
-          contact_phone: string
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          name: string
-          logo_url?: string | null
-          description: string
-          contact_email: string
-          contact_phone: string
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          name?: string
-          logo_url?: string | null
-          description?: string
-          contact_email?: string
-          contact_phone?: string
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: []
-        }
-        reviews: {
-        Row: {
-          id: string
-          user_id: string
-          trip_id: string
-          rating: number
           comment: string
           created_at: string
+          id: string
+          rating: number
+          trip_id: string
           updated_at: string
+          user_id: string
         }
         Insert: {
-          id?: string
-          user_id: string
-          trip_id: string
-          rating: number
           comment: string
           created_at?: string
+          id?: string
+          rating: number
+          trip_id: string
           updated_at?: string
+          user_id: string
         }
         Update: {
-          id?: string
-          user_id?: string
-          trip_id?: string
-          rating?: number
           comment?: string
           created_at?: string
+          id?: string
+          rating?: number
+          trip_id?: string
           updated_at?: string
+          user_id?: string
         }
         Relationships: [
           {
-          foreignKeyName: "reviews_user_id_fkey"
-          columns: ["user_id"]
-          isOneToOne: false
-          referencedRelation: "profiles"
-          referencedColumns: ["id"]
+            foreignKeyName: "reviews_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "bus_trips"
+            referencedColumns: ["id"]
           },
           {
-          foreignKeyName: "reviews_trip_id_fkey"
-          columns: ["trip_id"]
-          isOneToOne: false
-          referencedRelation: "bus_trips"
-          referencedColumns: ["id"]
-          }
+            foreignKeyName: "reviews_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
         ]
-        }
-        notifications: {
-        Row: {
-          id: string
-          user_id: string
-          title: string
-          message: string
-          type: "booking" | "system" | "update"
-          read: boolean
-          created_at: string
-          updated_at: string
-        }
-        Insert: {
-          id?: string
-          user_id: string
-          title: string
-          message: string
-          type: "booking" | "system" | "update"
-          read?: boolean
-          created_at?: string
-          updated_at?: string
-        }
-        Update: {
-          id?: string
-          user_id?: string
-          title?: string
-          message?: string
-          type?: "booking" | "system" | "update"
-          read?: boolean
-          created_at?: string
-          updated_at?: string
-        }
-        Relationships: [
-          {
-          foreignKeyName: "notifications_user_id_fkey"
-          columns: ["user_id"]
-          isOneToOne: false
-          referencedRelation: "profiles"
-          referencedColumns: ["id"]
-          }
-        ]
-        }
+      }
     }
     Views: {
       [_ in never]: never
