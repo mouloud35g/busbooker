@@ -8,6 +8,7 @@ import { StatsOverview } from "@/components/admin/StatsOverview";
 import { RecentBookingsChart } from "@/components/admin/RecentBookingsChart";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const AdminPage = () => {
   const { error } = useQuery({
