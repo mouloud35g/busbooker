@@ -205,6 +205,47 @@ export type Database = {
           },
         ]
       }
+      payments: {
+        Row: {
+          amount: number
+          booking_id: string
+          created_at: string
+          id: string
+          payment_method: string
+          status: string
+          transaction_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          booking_id: string
+          created_at?: string
+          id?: string
+          payment_method: string
+          status: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          booking_id?: string
+          created_at?: string
+          id?: string
+          payment_method?: string
+          status?: string
+          transaction_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "payments_booking_id_fkey"
+            columns: ["booking_id"]
+            isOneToOne: false
+            referencedRelation: "bookings"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       profiles: {
         Row: {
           address: string | null
@@ -326,6 +367,18 @@ export type Database = {
           total_trips: number
           upcoming_trips: number
           sold_out_trips: number
+        }[]
+      }
+      get_payment_stats: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          total_revenue: number
+          pending_amount: number
+          completed_amount: number
+          failed_amount: number
+          cash_payments_count: number
+          card_payments_count: number
+          transfer_payments_count: number
         }[]
       }
       is_admin: {

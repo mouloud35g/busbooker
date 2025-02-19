@@ -56,11 +56,11 @@ const AdminPage = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Gestion des Avis</CardTitle>
+              <CardTitle>Gestion des Paiements</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="mb-4">Gérer les avis des clients</p>
-              <Link to="/admin/reviews">
+              <p className="mb-4">Gérer les paiements et voir les rapports financiers</p>
+              <Link to="/admin/payments">
                 <Button className="w-full">Accéder</Button>
               </Link>
             </CardContent>
@@ -68,11 +68,11 @@ const AdminPage = () => {
 
           <Card>
             <CardHeader>
-              <CardTitle>Gestion des Notifications</CardTitle>
+              <CardTitle>Gestion des Avis</CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="mb-4">Gérer les notifications système</p>
-              <Link to="/admin/notifications">
+              <p className="mb-4">Gérer les avis des clients</p>
+              <Link to="/admin/reviews">
                 <Button className="w-full">Accéder</Button>
               </Link>
             </CardContent>
