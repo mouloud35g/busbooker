@@ -6,8 +6,27 @@ import { withAuth } from "@/components/auth/with-auth";
 import { AdminLayout } from "@/components/layouts/admin-layout";
 import { StatsOverview } from "@/components/admin/StatsOverview";
 import { RecentBookingsChart } from "@/components/admin/RecentBookingsChart";
+import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
 
 const AdminPage = () => {
+  const { error } = useQuery({
+    queryKey: ['adminStats'],
+    queryFn: async () => {
+      const { data, error } = await supabase.rpc('get_admin_stats');
+      if (error) {
+        console.error('Error fetching admin stats:', error);
+        toast.error("Erreur lors du chargement des statistiques");
+        throw error;
+      }
+      return data?.[0];
+    }
+  });
+
+  if (error) {
+    toast.error("Erreur lors du chargement des statistiques. Veuillez réessayer plus tard.");
+  }
+
   return (
     <AdminLayout>
       <div className="container mx-auto p-4 space-y-6">
