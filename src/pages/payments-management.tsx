@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import { DataTable, DataTableHead, DataTableRow, DataTableCell } from "@/components/DataTable";
@@ -8,11 +7,13 @@ import { supabase } from "@/integrations/supabase/client";
 import { withAuth } from "@/components/auth/with-auth";
 import { AdminLayout } from "@/components/layouts/admin-layout";
 
+type PaymentStatus = 'pending' | 'completed' | 'failed';
+
 type Payment = {
   id: string;
   booking_id: string;
   amount: number;
-  status: 'pending' | 'completed' | 'failed';
+  status: PaymentStatus;
   payment_method: string;
   transaction_id: string | null;
   created_at: string;
@@ -33,6 +34,10 @@ type PaymentStats = {
   cash_payments_count: number;
   card_payments_count: number;
   transfer_payments_count: number;
+};
+
+const isValidPaymentStatus = (status: string): status is PaymentStatus => {
+  return ['pending', 'completed', 'failed'].includes(status);
 };
 
 const PaymentsManagement = () => {
@@ -65,7 +70,19 @@ const PaymentsManagement = () => {
         .order('created_at', { ascending: false });
 
       if (error) throw error;
-      setPayments(data || []);
+
+      const validatedPayments = (data || []).map(payment => {
+        if (!isValidPaymentStatus(payment.status)) {
+          console.error(`Invalid payment status: ${payment.status}`);
+          return {
+            ...payment,
+            status: 'pending' as PaymentStatus
+          };
+        }
+        return payment as Payment;
+      });
+
+      setPayments(validatedPayments);
     } catch (error) {
       toast({
         title: "Erreur",
@@ -107,7 +124,7 @@ const PaymentsManagement = () => {
       .subscribe();
   };
 
-  const getStatusColor = (status: Payment['status']) => {
+  const getStatusColor = (status: PaymentStatus) => {
     switch (status) {
       case 'completed':
         return 'text-green-500';
